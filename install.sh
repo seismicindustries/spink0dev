@@ -119,12 +119,12 @@ echo -e "[ \033[1m\033[96mpink\033[m ] Build pink and install the binary and the
 rm -rf build
 mkdir build
 cd build
-if [ $1 == "no-ui" ]
+if [ $1 == "no-ui" ];
   then
     cmake -DCMAKE_BUILD_TYPE=Release -DUSE_PI_ZERO=OFF -DUSE_WEBSOCKET=OFF -DJUST_INSTALL_CEREAL=ON ..
   else
     echo -e "[ \033[1m\033[96mpink\033[m ] Raspberry Pi Zero shield support is enabled ---------------------------"
-    cmake -DCMAKE_BUILD_TYPE=Release -DUSE_PI_ZERO=ON -DUSE_WEBSOCKET=ON -DJUST_INSTALL_CEREAL=ON ..
+    cmake -DCMAKE_BUILD_TYPE=Release -DUSE_PI_ZERO=ON -DUSE_WEBSOCKET=OFF -DUSE_RTAUDIO=ON -DJUST_INSTALL_CEREAL=ON ..
 fi
 make
 if [ $platform == "linux-rpi" ];
@@ -133,6 +133,27 @@ if [ $platform == "linux-rpi" ];
     sudo update-rc.d pink defaults
 fi
 cd ..
+
+
+
+echo ""
+echo ""
+echo ""
+echo -e "[ \033[1m\033[96mpink\033[m ] Install wlan mode switching script into crontab @ reboot - temporary -"
+if [ $platform == "linux-rpi" ];
+  then
+    sudo mkdir /opt/si
+    sudo mkdir /opt/si/modeswitch
+    sudo cp support/modeswitch/wlan-mode.sh /opt/si/modeswitch.
+    touch tmpfile
+    echo "@reboot /opt/si/modeswitch/wlan-mode.sh &" >> tmpfile
+    sudo crontab tmpfile
+    rm tmpfile
+fi
+
+
+
+
 
 echo ""
 echo ""
