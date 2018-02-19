@@ -83,7 +83,8 @@ echo ""
 echo -e "[ \033[1m\033[96mpink\033[m ] Install RaspAP --------------------------------------------------------"
 if [ $platform == "linux-rpi" ];
   then
-    wget -q https://git.io/vDr0i -O /tmp/raspap && bash /tmp/raspap
+#    wget -q https://git.io/vDr0i -O /tmp/raspap && bash /tmp/raspap
+    wget -q https://git.io/voEUQ -O /tmp/raspap && bash /tmp/raspap
 fi
 
 echo ""
@@ -120,7 +121,7 @@ mkdir build
 cd build
 if [ $1 == "no-ui" ]
   then
-    cmake -DCMAKE_BUILD_TYPE=Release -DUSE_PI_ZERO=OFF -DUSE_WEBSOCKET=ON -DJUST_INSTALL_CEREAL=ON ..
+    cmake -DCMAKE_BUILD_TYPE=Release -DUSE_PI_ZERO=OFF -DUSE_WEBSOCKET=OFF -DJUST_INSTALL_CEREAL=ON ..
   else
     echo -e "[ \033[1m\033[96mpink\033[m ] Raspberry Pi Zero shield support is enabled ---------------------------"
     cmake -DCMAKE_BUILD_TYPE=Release -DUSE_PI_ZERO=ON -DUSE_WEBSOCKET=ON -DJUST_INSTALL_CEREAL=ON ..
